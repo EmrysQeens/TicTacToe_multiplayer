@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1 , user-scalable=no"/>
+   <link rel="stylesheet" href="{{url_for('static',filename='styles/game.css')}}"/>
+   <script src="{{ url_for('static', filename='scripts/socketio.js') }}"></script>
+   <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+     <center>
+        <div id="container">
+          <h1 id="head">Tic Tac Toe</h1>
+            <div id="sub">
+                 <form action="#" method="post" id="form">
+                     <input type="text" class="getInput" id="name" name="name" placeholder="Enter your name please" autofocus autocomplete="no" maxlength="10">
+                     <input type="radio" class="host_join"  name="host_join" value="host" id="host"/> <label for="host">Host</label>
+                     <input type="radio" class="host_join" name="host_join" value="join"  id="join"/>  <label for="join">Join</label>
+                     <input type="number" class="getInput" id="conn_id" name="conn_id" placeholder="Enter Connection id." autofocus autocomplete="no" maxlength="20">
+                     <span id="disp_conn_id"></span>
+                     <button type="submit" class="getInput"  id="btn">Play</button>
+                 </form>
+                 <span id="load"></span>
+            </div>
+            <div id="main">
+                 <div  id="cont" align="center">
+                    <div>
+                        {% for y in range(3) %}
+                            <button class="btns" data-no="{{y}}"></button>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {% for y in range(3,6) %}
+                            <button class="btns" data-no="{{y}}"></button>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {% for y in range(6,9) %}
+                            <button class="btns" data-no="{{y}}"></button>
+                        {% endfor %}
+                    </div>
+                <div>
+			    <span id="host_score">{{host_name}}</span>
+			    <span id="join_score">{{join_name}}</span>
+		    </div>
+        </div>
+            </div>
+        </div>
+    </center>
+</body>
+</html>

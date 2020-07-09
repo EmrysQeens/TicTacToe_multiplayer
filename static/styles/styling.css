@@ -1,0 +1,110 @@
+@font-face
+{
+	font-family: Comic Sans Ms;
+	src:url(res/comic.ttf);
+}
+
+h2
+{
+	color:teal;
+	font-family: Comic Sans Ms;
+}
+
+body
+{
+	background-image: linear-gradient(to right,#ff6a00,#ee0979);
+}
+
+#name
+{
+	font-family: Comic Sans Ms;
+	width: 250px;
+	border : 2px dashed teal;
+	border-top: none;
+	background: transparent;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	color: white;
+}
+
+button
+{
+	width:60px;
+	height: 60px;
+	background: #D7816A;
+	border:none;
+	border-radius: 7px;	
+	color: white;
+	outline: none;
+	font-family: Comic Sans Ms;
+	font-size: 30px;
+	margin: 10px;
+	position:relative;
+	vertical-align: top;
+}
+
+button:hover{
+	background:#de6161;
+}
+h2:hover
+{
+	color:green;
+}
+
+#selectC
+{
+	border :5px;
+	background: cyan;
+	background-image: linear-gradient(to right,#ee0979,#ff6a00);
+	width: 300px;
+	border-radius: 10px 20px 10px 20px;
+	margin-top: 200px;
+}
+
+#cont
+{
+	display: none;
+	background: cyan;
+	background-image: linear-gradient(to right,#ee0979,#ff6a00);
+	margin-top:70px;
+	width: 300px;
+	border-radius: 10px 20px 10px 20px;
+}
+span{
+	margin:15px;
+	font-family:Comic Sans Ms;
+	color: white;
+	font-size:ssmall;
+	margin-top:10px;
+}
+
+#line
+{
+    position:relative;
+    animation: anims ;
+    animation-duration: 20s;
+    animation-delay: 1s;
+    background-color:teal;
+    height: 10px;
+    border:none;
+    border-radius:5px;
+    width:56%;
+    animation-iteration-count: infinite;
+}
+
+@keyframes anims
+{
+        0%{width:56%;  background-color:teal;}
+        12.5%{width:42%;  background-color:cyan;}
+        24.5%{width:28%;  background-color:lightskyblue;}
+        37%{ width:14%;  background-color:green;}
+        49.5%{width:0%;   background-color:yellow;}
+        62%{width:14%;   background-color:green;}
+        74.5%{width:28%;   background-color:lightskyblue;}
+        87%{width:42%;   background-color:cyan;}
+        100%{width:56%;   background-color:teal;}
+
+}
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, user-scalable=no"/>
+	<title>Tic-Tac-Toe</title>
+	<script src="{{ url_for('static',filename='scripts/playtry.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/styling.css')}}">
+</head>
+<body onload="textcount();" bgcolor="white">
+<div align="center">
+<div id="selectC">
+	<span>Select character</span>
+		<input type="text" id="name" placeholder="Your name??" autocomplete="off" autofocus maxlength="8">
+	<br/>
+	<button value="X" onclick="on_select(this);">X</button>
+	<button value="O" onclick="on_select(this);">O</button>
+</div>
+<div id="cont" align="center">
+		<header>
+			<h2 id="hd">Tic Tac Toe</h2>
+		</header>
+		<hr id="line"/>
+		<div>
+			<button value="0" onclick="on_event(this);"></button>
+			<button value="1" onclick="on_event(this);"></button>
+			<button value="2" onclick="on_event(this);"></button>
+		</div>
+		<div>
+			<button value="3" onclick="on_event(this);"></button>
+			<button value="4" onclick="on_event(this);"></button>
+			<button value="5" onclick="on_event(this);"></button>
+		</div>
+		<div>
+			<button value="6" onclick="on_event(this);"></button>
+			<button value="7" onclick="on_event(this);"></button>
+			<button value="8" onclick="on_event(this);"></button>
+		</div>
+		<div>
+			<span id="player"></span>
+			<span id="computer">Qeens : 0</span>
+		</div>
+	</div>
+</div>
+</body>
+</html>

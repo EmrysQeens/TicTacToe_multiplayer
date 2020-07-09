@@ -1,0 +1,92 @@
+@font-face
+{
+ src:url(../assets/comic.ttf);
+ font-family:Comic Sans Ms;
+}
+
+#container
+{
+	display: block;
+	background: cyan;
+	background-image: linear-gradient(to right,#ee0979,#ff6a00);
+	margin-top:70px;
+	width: 300px;
+	border-radius: 10px 20px 10px 20px;
+	text_fill:white;
+}
+
+#head
+{
+     color:white;
+}
+
+
+body
+{
+	background-image: linear-gradient(to right,#ff6a00,#ee0979);
+	font-family:Comic Sans Ms;
+}
+
+.getInput
+{
+ color:white;
+ color:white;
+ background:transparent;
+ outline:none;
+ display:block;
+ font-family:Comic Sans Ms;
+ border-radius:5px;
+ border-color:white;
+ margin:30px;
+ border:3px solid white;
+}
+
+span{
+	margin:15px;
+	font-family:Comic Sans Ms;
+	color: white;
+	font-size:ssmall;
+	margin-top:10px;
+}
+
+#load
+{
+
+}
+
+.btns
+{
+    width:60px;
+	height: 60px;
+	background: #D7816A;
+	border:3px solid white;
+	border-radius: 7px;
+	color: white;
+	outline: none;
+	font-family: Comic Sans Ms;
+	font-size: 30px;
+	margin: 10px;
+	display:none;
+	position:relative;
+	vertical-align: top;
+}
+
+ label
+ {
+    color:white;
+ }
+
+#conn_id, #disp_conn_id
+{
+    display:none;
+}
+
+#load
+{
+    display:none;
+}
+
+#btn
+{
+    margin-bottom:5px;
+}
