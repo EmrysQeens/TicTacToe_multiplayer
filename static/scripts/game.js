@@ -5,23 +5,25 @@ document.addEventListener(
     'DOMContentLoaded',()=>
     {
         //Declare a global variable to hold all components.
-        var play_btn=document.querySelector('#btn');
-        var name_box=document.querySelector('#name');
-        var host_radio=document.querySelector('#host');
-        var join_radio=document.querySelector('#join');
-        var conn_id=document.querySelector('#disp_conn_id');
-        var conn_id_box=document.querySelector('#conn_id');
-        var play_btns=document.querySelectorAll('.btns');
-        var host_score=document.querySelector('#host_score');
-        var host_join=document.querySelector('#host_join');
-        var load=document.querySelector('#load');
+        const play_btn=document.querySelector('#btn');
+        const name_box=document.querySelector('#name');
+        const host_radio=document.querySelector('#host');
+        const join_radio=document.querySelector('#join');
+        const conn_id=document.querySelector('#disp_conn_id');
+        const conn_id_box=document.querySelector('#conn_id');
+        const play_btns=document.querySelectorAll('.btns');
+        const host_score=document.querySelector('#host_score');
+        const host_join=document.querySelector('#host_join');
+        const load=document.querySelector('#load');
+        const sub=document.querySelector('#sub');
+        const main=document.querySelector('#main');
         //End 6.
 
         //Connect to server
-        var socketio=io.connect(location.protocol+"//"+`${document.domain}:${location.port}`);
+        const socketio=io.connect(location.protocol+"//"+`${document.domain}:${location.port}`);
         //End Connect to server
-        //Make a request variable.
-        const request=new XMLHttpRequest();
+        //Make a connection variable.
+        const connection=new XMLHttpRequest();
 
         //Event when server is connected to.
          socketio.on('connect',()=>
@@ -29,15 +31,24 @@ document.addEventListener(
             document.querySelector('#form').onsubmit=(form)=>
             {
                 form.preventDefault();
-                name=name_box.value.charAt().toUpperCase()+name_box.value.substring(1);
-                selection=document.querySelector("input[name='host_join']:checked").value;
+                const name=name_box.value.charAt().toUpperCase()+name_box.value.substring(1);
+                const selection=document.querySelector("input[name='host_join']:checked").value;
                 //If names isn't typed and host or join not selected function returns.
-                if(name.length<=0 || selection==undefined) return;
+                if(name.length<=0 || selection==undefined) return false;
                 //If selection is host server is notified.
                 if(selection=='host') socketio.emit('new_host',{'name':name,'host_id':conn_id.innerHTML.substring(10)});
                 else socketio.emit('new_join',{'name':name,'join_id':conn_id_box.value});
-            }
+                loader(load);
+          }
+
+          socketio.on('connected',(data)=>
+          {
+                alert('connected');
+                sub.style.animationPlayState='running';
+                main.style.animationPlayState='running';
+                sub.addEventListener('animationend',()=>{toggle(main,sub);});
           });
+         });
           //End Event when server is connected to.
 
           //Add Event to radio buttons in startup.
@@ -46,17 +57,15 @@ document.addEventListener(
                {
                     if(this.value=='host')
                     {
-                         connection_id=Math.random().toString().substring(2);
                          response=undefined;
-                         request.open('POST' ,`/no/${connection_id}`);
-                         request.send();
+                         connection.open('POST' ,'/generate');
+                         connection.send();
                          //Im still going to write a onprogress code
-                         request.onload=()=>{
-                            stat=JSON.parse(request.responseText);
-                            response=stat.status;
-                         alert(response);
-                         conn_id.innerHTML=`Room ID = ${connection_id}`;
-                         toggle(conn_id,conn_id_box);
+                         connection.onload=()=>{
+                            stats=JSON.parse(connection.responseText);
+                            response=stats.connection_id;
+                            conn_id.innerHTML=`Room ID = ${response}`;
+                            toggle(conn_id,conn_id_box);
                          }
                     }
                     else toggle(conn_id_box,conn_id);
@@ -76,21 +85,3 @@ document.addEventListener(
     );
 
 
-
- //Add event listener to all Play Buttons
- multiple=(vals,func)=>
-    {
-     vals.forEach(
-            val=>
-            {
-                    func(val);
-            });
-    }
-  //End Add event listener to all Play Buttons
-
- //Toggle function to hide/display components.
- toggle=(elem_a,elem_b)=>
- {
-     elem_a.style.display='block';
-     elem_b.style.display='none';
- }

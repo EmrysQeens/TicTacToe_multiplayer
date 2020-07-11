@@ -4,6 +4,31 @@
  font-family:Comic Sans Ms;
 }
 
+@keyframes fadeout{
+    0%{ opacity: 1;}
+    75%{ opacity: 0;}
+    100%{ opacity: 0;
+                height:0px;}
+}
+
+#sub
+{
+    animation-name:fadeout;
+    animation-duration:3s;
+    animation-fill-mode:forwards;
+    animation-play-state:paused;
+}
+
+#main
+{
+    animation-name:fadeout;
+    animation-duration:3s;
+    animation-fill-mode:forwards;
+    animation-direction:reverse;
+    animation-play-state:paused;
+}
+
+
 #container
 {
 	display: block;
@@ -13,11 +38,18 @@
 	width: 300px;
 	border-radius: 10px 20px 10px 20px;
 	text_fill:white;
+	height:370px;
 }
 
 #head
 {
      color:white;
+}
+
+hr
+{
+    background-color:white;
+    height:2px;
 }
 
 
@@ -66,7 +98,6 @@ span{
 	font-family: Comic Sans Ms;
 	font-size: 30px;
 	margin: 10px;
-	display:none;
 	position:relative;
 	vertical-align: top;
 }
@@ -76,17 +107,18 @@ span{
     color:white;
  }
 
-#conn_id, #disp_conn_id
+#conn_id, #disp_conn_id, #main
 {
     display:none;
 }
 
 #load
 {
-    display:none;
+    display:block;
 }
 
 #btn
 {
     margin-bottom:5px;
 }
+
