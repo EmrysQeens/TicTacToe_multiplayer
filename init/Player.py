@@ -1,10 +1,4 @@
-class Player:
-    _opponent=''
-    def __init__(self,name,room):
-        self.name=name
-        self.room=room
-
-    def opponent(self,opponent):
-        self._opponent=opponent
+num=[1,2,3,4,5,6,7]
+print('2' in num)
 
 

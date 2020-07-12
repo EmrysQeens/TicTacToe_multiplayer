@@ -17,13 +17,17 @@ document.addEventListener(
         const load=document.querySelector('#load');
         const sub=document.querySelector('#sub');
         const main=document.querySelector('#main');
+        var room=undefined;
+        const hoster='X';
+        const joiner='O';
+        player=undefined;
         //End 6.
 
         //Connect to server
-        const socketio=io.connect(location.protocol+"//"+`${document.domain}:${location.port}`);
         //End Connect to server
         //Make a connection variable.
         const connection=new XMLHttpRequest();
+        const socketio=io.connect(location.protocol+"//"+`${document.domain}:${location.port}`);
 
         //Event when server is connected to.
          socketio.on('connect',()=>
@@ -36,17 +40,55 @@ document.addEventListener(
                 //If names isn't typed and host or join not selected function returns.
                 if(name.length<=0 || selection==undefined) return false;
                 //If selection is host server is notified.
-                if(selection=='host') socketio.emit('new_host',{'name':name,'host_id':conn_id.innerHTML.substring(10)});
-                else socketio.emit('new_join',{'name':name,'join_id':conn_id_box.value});
-                loader(load);
+                if(selection=='host')
+                {
+                    socketio.emit('new_host',{'name':name,'host_id':conn_id.innerHTML.substring(10)});
+                    room=conn_id.innerHTML.substring(10);
+                    player='host';
+                    loader(load);
+                }
+                else
+                {
+                const num=conn_id_box.value;
+                connection.open('POST',`/exist/${num}`)
+                connection.send();
+                connection.onload=()=>
+                {
+                    response=JSON.parse(connection.responseText);
+                    alert(response);
+                    if(response.stat0){
+                        if(!response.stat1){
+                            socketio.emit('new_join',{'name':name,'join_id':num});
+                            room=num;
+                            player='join';
+                            loader(load);
+                        }
+                        else
+                        {
+                            load.innerHTML="Can't Join please try another id.";
+                            load.style.display='block';
+                        }
+                    }
+                    else
+                    {
+                         load.innerHTML="Can't Join please try another id.";
+                         load.style.display='block';
+                    }
+                }
+
+                }
+
           }
 
           socketio.on('connected',(data)=>
           {
-                alert('connected');
                 sub.style.animationPlayState='running';
                 main.style.animationPlayState='running';
-                sub.addEventListener('animationend',()=>{toggle(main,sub);});
+                sub.addEventListener('animationend',()=>
+                {
+                    toggle(main,sub);
+                    load.remove();
+                 });
           });
          });
           //End Event when server is connected to.
@@ -74,11 +116,20 @@ document.addEventListener(
           //Add Event to radio buttons in startup.
 
           //Add event to all play button on startup.
-         multiple(play_btns,btn=>{
-
+         multiple(play_btns,btn=>
+         {
+            btn.onclick=function(){
+                if(btn.innerHTML==" ")
+                    socketio.emit('play',{'button':this.dataset.no,'player':player,'room':room});
+            }
         });
         //Add event to  all play button on startup.
 
+        socketio.on('isplay',(data)=>
+        {
+            document.querySelectorAll('.btns')[data.btn].innerHTML=data.btn;
+            console.log('Clicked');
+        });
 
     }
     //End When document loads.
