@@ -5,6 +5,8 @@ document.addEventListener(
     'DOMContentLoaded',()=>
     {
         //Declare a global variable to hold all components.
+        const cases=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        btn_vals=["a","b","c","d","e","f","g","h","i"];
         const play_btn=document.querySelector('#btn');
         const name_box=document.querySelector('#name');
         const host_radio=document.querySelector('#host');
@@ -13,6 +15,7 @@ document.addEventListener(
         const conn_id_box=document.querySelector('#conn_id');
         const play_btns=document.querySelectorAll('.btns');
         const host_score=document.querySelector('#host_score');
+        const join_score=document.querySelector('#join_score');
         const host_join=document.querySelector('#host_join');
         const load=document.querySelector('#load');
         const sub=document.querySelector('#sub');
@@ -21,6 +24,11 @@ document.addEventListener(
         const hoster='X';
         const joiner='O';
         player=undefined;
+        character=undefined;
+        play=false;
+        count=0;
+        p1=0;
+        p2=0;
         //End 6.
 
         //Connect to server
@@ -45,7 +53,9 @@ document.addEventListener(
                     socketio.emit('new_host',{'name':name,'host_id':conn_id.innerHTML.substring(10)});
                     room=conn_id.innerHTML.substring(10);
                     player='host';
+                    character=hoster;
                     loader(load);
+                    play_btn.disabled=true;
                 }
                 else
                 {
@@ -55,13 +65,14 @@ document.addEventListener(
                 connection.onload=()=>
                 {
                     response=JSON.parse(connection.responseText);
-                    alert(response);
                     if(response.stat0){
                         if(!response.stat1){
                             socketio.emit('new_join',{'name':name,'join_id':num});
                             room=num;
                             player='join';
+                            character=joiner;
                             loader(load);
+                            play_btn.disabled=true;
                         }
                         else
                         {
@@ -119,16 +130,46 @@ document.addEventListener(
          multiple(play_btns,btn=>
          {
             btn.onclick=function(){
-                if(btn.innerHTML==" ")
-                    socketio.emit('play',{'button':this.dataset.no,'player':player,'room':room});
-            }
+                if(btn.innerHTML==" " && play && player=='host'){
+                     socketio.emit('play',{'button':btn.dataset.no,'player':player,'room':room});
+                    }
+                if(btn.innerHTML==" " && !play && player=='join'){
+                    socketio.emit('play',{'button':btn.dataset.no,'player':player,'room':room});
+                    }
+                 }
         });
         //Add event to  all play button on startup.
 
         socketio.on('isplay',(data)=>
         {
-            document.querySelectorAll('.btns')[data.btn].innerHTML=data.btn;
-            console.log('Clicked');
+            play=!play;
+            count++;
+            p =data.player=='host' ? hoster :joiner;
+            document.querySelectorAll('.btns')[data.btn].innerHTML=p;
+            btn_vals[data.btn]=p;
+            winner=win(btn_vals,cases);
+            console.log(winner);
+            if (winner!=undefined && p==character){
+                 socketio.emit('winner',{'winner':winner,'room':room});
+                 }
+             if(count==9)
+              setTimeout(()=>{
+                reset(()=>{
+                    btn_vals=["a","b","c","d","e","f","g","h","i"];
+                count=0;
+             });},700);
+        });
+
+        socketio.on('win',(data)=>{
+          setTimeout(()=>{
+            reset(()=>{
+                btn_vals=["a","b","c","d","e","f","g","h","i"];
+                count=0;
+             });
+          if (data.winner==hoster)
+            host_score.innerHTML='Player1 '+ ++p1;
+           else
+             join_score.innerHTML='Player2 '+ ++p2;},700);
         });
 
     }

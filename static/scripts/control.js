@@ -27,3 +27,15 @@
         itr= itr==3 ? 0 : itr;
     },1000);
  }
+
+//Checks for win
+win=(vals,cases)=>
+{
+  for(t of cases)
+   if(vals[t[0]]==vals[t[1]] && vals[t[0]]==vals[t[2]]) return vals[t[0]];
+}
+
+reset=(func)=>{
+    func();
+    document.querySelectorAll('.btns').forEach((button)=>{button.innerHTML=" "});
+}

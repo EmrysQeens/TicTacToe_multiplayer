@@ -9,7 +9,6 @@ socketio=SocketIO(game)
 # This keeps track of list o rooms.
 connected_rooms=[]
 rooms_id=[]
-players=[]
 
 #This is the homepage of the game.
 @game.route('/')
@@ -54,5 +53,8 @@ def join(data):
 
 @socketio.on('play')
 def play(data):
-    player=data['player']
-    emit('isplay',{'btn':data['button']},room=data['room'])
+    emit('isplay',{'btn':data['button'],'player':data['player']},room=data['room'])
+
+@socketio.on('winner')
+def win(data):
+    emit('win',{'winner':data['winner']},room=data['room'])
