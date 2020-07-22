@@ -35,7 +35,8 @@ document.addEventListener(
         //End Connect to server
         //Make a connection variable.
         const connection=new XMLHttpRequest();
-        const socketio=io.connect(location.protocol+"//"+`${document.domain}:${location.port}`);
+        const ws=window.location.protocol=='https:' ? 'wss://' : 'ws://';
+        const socketio=io.connect(ws+"//"+`${document.domain}:${location.port}`);
 
         //Event when server is connected to.
          socketio.on('connect',()=>
