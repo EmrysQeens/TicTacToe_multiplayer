@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width , initial-scale=1 , user-scalable=no"/>
    <link rel="stylesheet" href="{{url_for('static',filename='styles/game.css')}}"/>
-   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+   <!--<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>-->
    <script src="{{ url_for('static', filename='scripts/socketio.js') }}"></script>
    <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
    <script src="{{ url_for('static', filename='scripts/control.js') }}"></script>
@@ -15,7 +15,7 @@
         <div id="container">
           <h1 id="head">Tic Tac Toe</h1>
             <div id="sub">
-                 <form action="#" method="post" id="form">
+                 <form action="" method="post" id="form">
                      <input type="text" class="getInput" id="name" name="name" placeholder="Enter your name please" autofocus autocomplete="no" maxlength="10">
                      <input type="radio" class="host_join"  name="host_join" value="host" id="host"/> <label for="host">Host</label>
                      <input type="radio" class="host_join" name="host_join" value="join"  id="join"/>  <label for="join">Join</label>

@@ -10,7 +10,7 @@ socketio=SocketIO(game)
 connected_rooms=[]
 rooms_id=[]
 
-#This is the homepage of the game.
+# This is the homepage of the game.
 @game.route('/')
 def home():
     return render_template("game.html")
