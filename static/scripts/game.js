@@ -35,7 +35,7 @@ document.addEventListener(
     //Make a connection variable.
     const connection = new XMLHttpRequest();
     //const socketio = io.connect(location.protocol + "//" + `${document.domain}` + ':' + location.port, { transports: ['websocket'] });
-    const socketio=io.connect('http://127.0.0.1:5000')
+    const socketio=io.connect('https://qeens.herokuapp.com')
 
     //Event when server is connected to.
     socketio.on('connect', () => {
