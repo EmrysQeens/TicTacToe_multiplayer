@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, jsonify
 from flask_socketio import join_room,leave_room,send,SocketIO,rooms,emit
-from init import events, player
 
 game=Flask(__name__)
 game.config['SECRET_KEY'] = '234567834L'
