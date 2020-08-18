@@ -58,3 +58,7 @@ def play(data):
 @socketio.on('winner')
 def win(data):
     emit('win',{'winner':data['winner']},room=data['room'])
+
+
+if __name__=='__main__':
+   game.run()
